@@ -36,7 +36,7 @@ namespace vaxelpengar
                         Console.BackgroundColor = ConsoleColor.Red;
                         Console.WriteLine("Totalsumman är för liten. Köpet kunde inte genomföras");
                         Console.ResetColor();
-                        Environment.Exit(0);
+                        return;
                     }
                 }
                 catch
@@ -66,7 +66,7 @@ namespace vaxelpengar
                         Console.BackgroundColor = ConsoleColor.Red;
                         Console.WriteLine("\nErhållet belopp är för litet. Köpet kunde inte genomföras.\n");
                         Console.ResetColor();
-                        Environment.Exit(0);
+                        return;
                     }
                 }
                 catch
@@ -95,15 +95,15 @@ namespace vaxelpengar
 
 
             moneyBack = recievedAmount - (uint)total;
-
-            if (moneyBack / 500 >= 1)
+            uint count = moneyBack / 500;
+            if (count >= 1)
             {
-                Console.WriteLine("Antalet 500-lappar: " + moneyBack / 500);
+                Console.WriteLine("Antalet 500-lappar: {0}", count);
                 moneyBack %= 500;
             }
             if (moneyBack / 100 >= 1)
             {
-                Console.WriteLine("Antalet 100-lappar: " + moneyBack / 100);
+                Console.WriteLine("Antalet 100-lappar: {0}.", moneyBack / 100);
                 moneyBack %= 100;
             }
             if (moneyBack / 50 >= 1)
