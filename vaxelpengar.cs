@@ -16,39 +16,83 @@ namespace vaxelpengar
             double total;               //Ska vara uint enligt instruktioner, men det blir fel när man ska skriva in summan då.
             uint recievedAmount;        //Vad kunden ger kassören
             uint moneyBack;             //Växeln kunden får tillbaka
-            uint amountOf500Notes = 0;
-            uint amountOf100Notes = 0;
-            uint amountOf50Notes = 0;
-            uint amountOf20Notes = 0;
-            uint amountOf10Coins = 0;
-            uint amountOf5Coins = 0;
-            uint amountOf1Coins = 0;
 
             //Ta emot data från användare
-            Console.Write("Ange totalsumma: ");
-            total = double.Parse(Console.ReadLine());
-            Console.Write("Ange erhållet belopp: ");
-            recievedAmount = uint.Parse(Console.ReadLine());
 
-            //Skriv ut kvitto - börja med totalt
-            Console.WriteLine("\nKvitto\n---------------------");
-            //Öresavrunda
+
+            while (true)
+            {
+                try
+                {
+                    Console.Write("Ange totalsumma:        ");
+                    total = double.Parse(Console.ReadLine());
+
+                    if (total > 0.49)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        Console.BackgroundColor = ConsoleColor.Red;
+                        Console.WriteLine("Totalsumman är för liten. Köpet kunde inte genomföras");
+                        Console.ResetColor();
+                        Environment.Exit(0);
+                    }
+                }
+                catch
+                {
+                    Console.BackgroundColor = ConsoleColor.Red;
+                    Console.WriteLine("\nFEL! Erhållet belopp felaktigt.\n");
+                    Console.ResetColor();
+                }
+            }
+
             subtotal = (uint)Math.Round(total);
             roundingOffAmount = total - subtotal;
 
-            Console.WriteLine("Totalt: {0:c}", total);
-            Console.WriteLine("Öresavrundning: {0:c}", roundingOffAmount);
-            Console.WriteLine("Att betala: {0:c}", (uint)subtotal);         //Borde anges utan ören. Hur?
-            Console.WriteLine("Kontant: {0}", recievedAmount);
+            while (true)
+            {
+                try
+                {
+                    Console.Write("Ange erhållet belopp:  ");
+                    recievedAmount = uint.Parse(Console.ReadLine());
+
+                    if (recievedAmount > total)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        Console.BackgroundColor = ConsoleColor.Red;
+                        Console.WriteLine("\nErhållet belopp är för litet. Köpet kunde inte genomföras.\n");
+                        Console.ResetColor();
+                        Environment.Exit(0);
+                    }
+                }
+                catch
+                {
+                    Console.BackgroundColor = ConsoleColor.Red;
+                    Console.WriteLine("\nFEL! Erhållet belopp felaktigt.\n");
+                    Console.ResetColor();
+                }
+
+            }
+            
+            //Skriv ut kvitto - börja med totalt
+            Console.WriteLine("\nKVITTO\n-------------------------------");
+            Console.WriteLine("Totalt        :      {0, 10:c}", total);
+            Console.WriteLine("Öresavrundning:      {0, 10:c}", roundingOffAmount);
+            Console.WriteLine("Att betala    :      {0, 10:c0}", (uint)subtotal);         //Borde anges utan ören. Hur?
+            Console.WriteLine("Kontant       :      {0, 10:c}", recievedAmount);
             moneyBack = recievedAmount - (uint)total;
             //Räkna ut pengar tillbaka från kontantbetalning -- avrundat belopp
-            Console.WriteLine("Tillbaka {0}", moneyBack);
-            Console.WriteLine("---------------------");
+            Console.WriteLine("Tillbaka      :      {0, 10:c}", moneyBack);
+            Console.WriteLine("-------------------------------");
 
 
             //Räkna ut antal sedlar med hjälp av while och %
 
-           
+
 
             moneyBack = recievedAmount - (uint)total;
 
